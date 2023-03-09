@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Sistema de inscripciones UAIE
+{% endblock titulo %}
+    
+
+{% block contenido %}
+    
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_materias' %}">Materias</a></li>
+            <li><a class="dropdown-item" href="{% url 'lista_programas' %}">Programas</a></li>
+            <li><a class="dropdown-item" href="{% url 'lista_unidades' %}">Unidades</a></li>
+        </ul>
+    {% endblock drop %}
+        
+    <h1>Bienvenido al sistema de inscripciones UAIE</h1>
+    <p>Donde puedes cargar todas las materias que quieras</p>
+    <img class="img-fluid" src="{% static 'img/ins.jpg' %}"  alt="Inscripciones">
+{% endblock contenido %}
+    

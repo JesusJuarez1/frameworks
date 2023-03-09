@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block titulo %}
+    Nuevo programa
+{% endblock titulo %}
+
+{% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_programas' %}">Lista Programas</a></li>
+            <li><a class="dropdown-item" href="{% url 'nuevo_programa' %}">Nuevo Programa</a></li>
+        </ul>
+    {% endblock drop %}
+
+    <h1>Nuevo programa</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-primary" type="submit">Agregar</button>
+    </form>
+{% endblock contenido %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Nueva Unidad
+{% endblock titulo %}
+
+{% block contenido %}
+
+    {% block drop %}
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Unidades Académicas
+        </a>
+
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_unidades' %}">Lista Unidades</a></li>
+            <li><a class="dropdown-item" href="{% url 'nueva_unidad' %}">Nueva Unidad</a></li>
+        </ul>
+    {% endblock drop %}
+
+<h1>Nueva Unidad</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Agregar</button>
+</form>
+{% endblock contenido %}

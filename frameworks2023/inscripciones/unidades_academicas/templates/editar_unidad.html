@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Editar Unidad
+{% endblock titulo %}
+
+{% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_unidades' %}">Lista Unidades</a></li>
+            <li><a class="dropdown-item" href="{% url 'nueva_unidad' %}">Nueva Unidad</a></li>
+        </ul>
+    {% endblock drop %}
+
+    <h1>Actualizar Unidad</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Guardar</button>
+    </form>
+{% endblock contenido %}

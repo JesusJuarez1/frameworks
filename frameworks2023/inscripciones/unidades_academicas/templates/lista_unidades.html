@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de Unidades Académicas
+{% endblock titulo %}
+
+
+{% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_unidades' %}">Lista Unidades</a></li>
+            <li><a class="dropdown-item" href="{% url 'nueva_unidad' %}">Nueva Unidad</a></li>
+        </ul>
+    {% endblock drop %}
+
+    <h1>Lista de unidades académicas</h1>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for unidad in unidades %}
+                <tr>
+                    <td>{{unidad.id}}</td>
+                    <td>{{unidad.nombre}}</td>
+                    <td>{{unidad.descripcion}}</td>
+                    <td><a class="btn btn-danger" href="{% url 'eliminar_unidad' unidad.id %}">Eliminar</a></td>
+                    <td><a class="btn btn-success" href="{% url 'editar_unidad' unidad.id %}">Editar</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock contenido %}

@@ -1,0 +1,47 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora</title>
+    </head>
+    <body>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <p>
+                    <table>
+                        <tr>
+                            <td><input type="number" name="num1" value="{{num1}}"></td>
+                        </tr>
+                        <tr>
+                            <td><select name="operacion" value="{{operacion}}">
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                                <option value="*">*</option>
+                                <option value="/">/</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" name="num2" value="{{num2}}"></td>
+                        </tr>
+                        <tr>
+                            <td><button type="submit">=</button></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                {% if resultado %}
+                                <div>
+                                    <input type="text" name="res" id="id_res" value="{{resultado}}">
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                
+                </p>
+            </form>		
+        </div>
+    </body>
+</html>

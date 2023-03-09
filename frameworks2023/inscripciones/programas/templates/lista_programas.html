@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de programas académicos
+{% endblock titulo %}
+    
+
+{% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_programas' %}">Lista Programas</a></li>
+            <li><a class="dropdown-item" href="{% url 'nuevo_programa' %}">Nuevo Programa</a></li>
+        </ul>
+    {% endblock drop %}
+
+    <h1>Lista de programas académicos</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Teléfono</th>
+                <th>Unidad Académica</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for programa in programas %}
+                <tr>
+                    <td>{{programa.clave}}</td>
+                    <td>{{programa.nombre}}</td>
+                    <td>{{programa.latitud}}</td>
+                    <td>{{programa.longitud}}</td>
+                    <td>{{programa.telefono}}</td>
+                    <td>{{programa.unidad_academica}}</td>
+                    <td><a class="btn btn-danger" href="{% url 'eliminar_programa' programa.clave %}">Eliminar</a></td>
+                    <td><a class="btn btn-success" href="{% url 'editar_programa' programa.clave %}">Editar</a></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock contenido %}

@@ -1,0 +1,28 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        {% if mensaje %}
+        <div>
+            {{mensaje}}
+        </div>
+        {% endif %}
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <p>
+                    <label for="username">Nombre de usuario:</label>
+                    <input type="username" name="username" id="username">
+                </p>
+                <p>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" name="password" id="password">
+                </p>
+                <p>
+                    <button type="submit">Ingresar</button>
+                </p>
+            </form>		
+        </div>
+    </body>
+</html>
