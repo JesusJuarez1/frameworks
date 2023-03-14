@@ -22,25 +22,34 @@ class FormEditarMateria(FormMateria):
         exclude = ['clave']
         model = Materia
         
+class FiltrosMateria(FormMateria):
+    
+    def __init__(self, *args, **kwargs):
+        super(FiltrosMateria, self).__init__(*args, **kwargs)
         
-class FiltrosMateria(forms.Form):
-    nombre = forms.CharField(
-        widget = forms.TextInput(attrs={'placeholder':'Nombre', 'class':'form-control'}),
-        required = False,
-    )
-    clave = forms.CharField(
-        widget = forms.TextInput(attrs={'placeholder':'Clave', 'class':'form-control'}),
-        required = False,
-    )
-    semestre = forms.CharField(
-        widget = forms.Select(choices=SEMESTRE, attrs={'class':'form-control'}),
-        required = False,
-    )
-    creditos = forms.CharField(
-        widget = forms.NumberInput(attrs={'placeholder':'Creditos', 'class':'form-control'}),
-        required = False,
-    )
-    optativa = forms.CharField(
-        widget = forms.CheckboxInput(),
-        required = False,
-    )
+        for field in self.fields:
+            self.fields[field].required = False
+
+
+
+# class FiltrosMateria(forms.Form):
+#     nombre = forms.CharField(
+#         widget = forms.TextInput(attrs={'placeholder':'Nombre', 'class':'form-control'}),
+#         required = False,
+#     )
+#     clave = forms.CharField(
+#         widget = forms.TextInput(attrs={'placeholder':'Clave', 'class':'form-control'}),
+#         required = False,
+#     )
+#     semestre = forms.CharField(
+#         widget = forms.Select(choices=SEMESTRE, attrs={'class':'form-control'}),
+#         required = False,
+#     )
+#     creditos = forms.CharField(
+#         widget = forms.NumberInput(attrs={'placeholder':'Creditos', 'class':'form-control'}),
+#         required = False,
+#     )
+#     optativa = forms.CharField(
+#         widget = forms.CheckboxInput(),
+#         required = False,
+#     )

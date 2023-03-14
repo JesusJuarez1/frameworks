@@ -28,7 +28,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'unidades_academicas',
     'programas',
-    'materias'
+    'materias',
+    'horarios',
+    'docentes',
+    'salones'
 ]
 
 MIDDLEWARE = [

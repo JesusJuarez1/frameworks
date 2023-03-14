@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block titulo %}
+    Eliminar Materia
+{% endblock titulo %}
+    
+
+{% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_horarios' %}">Lista Horarios</a></li>
+            <li><a class="dropdown-item" href="{% url 'nuevo_horario' %}">Nuevo Horario</a></li>
+        </ul>
+    {% endblock drop %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p>¿Estás seguro que quieres eliminar el horario {{object.nombre}}?</p>
+        {{form}}
+        <button class="btn btn-danger" type="submit">Eliminar</button>
+        <a class="btn btn-warning"href="{% url 'lista_horarios' %}">Cancelar</a>
+    </form>
+{% endblock contenido %}
+    

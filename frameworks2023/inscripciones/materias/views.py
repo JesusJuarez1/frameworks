@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Materia
 from .forms import FormMateria, FormEditarMateria, FiltrosMateria
 from django import forms
+from programas.models import ProgramaAcademico
 
 class ListaMaterias(ListView):
     model = Materia
@@ -25,7 +26,7 @@ class EditarMateria(UpdateView):
     extra_context = {'accion': 'Editar'}
     success_url = reverse_lazy('lista_materias')
     
-class EliminarrMateria(DeleteView):
+class EliminarMateria(DeleteView):
     model = Materia
     success_url = reverse_lazy('lista_materias')
     
@@ -35,25 +36,36 @@ class Bienvenida(TemplateView):
     
 
 def buscar_materia(request):
-    materias = Materia.objects.all()
-    form = FormMateria(request.POST)
+    materias = Materia.objects.all().order_by('-nombre','semestre')
+    form = FiltrosMateria(request.POST)
     if request.method == 'POST':
         clave = request.POST.get('clave',None)
         nombre = request.POST.get('nombre',None)
         semestre = request.POST.get('semestre',None)
         creditos = request.POST.get('creditos',None)
+        programa = request.POST.get('programa',None)
         optativa = request.POST.get('optativa',None)
+        programa = ProgramaAcademico.objects.get(clave=programa)
         
         if clave:
             materias = materias.filter(clave=clave)
         if nombre:
-            materias = materias.filter(nombre=nombre)
+            materias = materias.filter(nombre__contains=nombre)
+            # materias = materias.get(nombre=nombre)
+            # materias = materias.filter(nombre__startswith=nombre) 
+            # Busca cadenas iguales que contengan al comienzo lo que tiene nombre
         if semestre:
             materias = materias.filter(semestre=semestre)
         if creditos:
             materias = materias.filter(creditos=creditos)
-        if optativa:
-            materias = materias.filter(optativa=optativa)
+        if programa:
+            materias = materias.filter(programa=programa)
+        if optativa == 'on':
+            materias = materias.filter(optativa=True)
+        
+        ##print(materias.query) Muestra la sentencia sql con la que hace la consulta
+    else:
+        form = FiltrosMateria()
     context = {
         'object_list':materias,
         'form': form

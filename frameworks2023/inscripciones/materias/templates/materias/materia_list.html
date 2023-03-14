@@ -24,6 +24,9 @@
                 <td>{{form.semestre}}</td>
                 <td>{{form.creditos}}</td>
                 <td>
+                    {{form.programa}}
+                </td>
+                <td>
                     <span>Optativa</span>
                     {{form.optativa}}
                 </td>
@@ -42,6 +45,7 @@
                 <th>Nombre</th>
                 <th>Semestre</th>
                 <th>Creditos</th>
+                <th>Programa</th>
                 <th>Optativa</th>
             </tr>
         </thead>
@@ -52,6 +56,9 @@
                     <td>{{materia.nombre}}</td>
                     <td>{{materia.semestre}}</td>
                     <td>{{materia.creditos}}</td>
+                    <td>
+                        {{materia.programa}}
+                    </td>
                     <td>
                         
                         {% if materia.optativa %}

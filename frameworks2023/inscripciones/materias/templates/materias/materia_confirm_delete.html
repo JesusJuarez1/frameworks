@@ -7,6 +7,14 @@
     
 
 {% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_materias' %}">Lista Materias</a></li>
+            <li><a class="dropdown-item" href="{% url 'nueva_materia' %}">Nueva Materia</a></li>
+        </ul>
+    {% endblock drop %}
+
     <form method="post">
         {% csrf_token %}
         <p>¿Estás seguro que quieres eliminar la materia {{object.nombre}}?</p>

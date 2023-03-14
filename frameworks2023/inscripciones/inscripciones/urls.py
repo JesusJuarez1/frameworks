@@ -8,4 +8,5 @@ urlpatterns = [
     path('unidades/', include('unidades_academicas.urls_unidades')),
     path('materias/', include('materias.urls')),
     path('', Bienvenida.as_view(), name='bienvenida'),
+    path('horarios/', include('horarios.urls_horarios')),
 ]

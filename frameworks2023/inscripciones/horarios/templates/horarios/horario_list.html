@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de Horarios
+{% endblock titulo %}
+    
+
+{% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_horarios' %}">Lista Horarios</a></li>
+            <li><a class="dropdown-item" href="{% url 'nuevo_horario' %}">Nuevo Horario</a></li>
+        </ul>
+    {% endblock drop %}
+
+    <h1>Lista de Horarios</h1>
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td>{{form.clave}}</td>
+            <td>{{form.materia}}</td>
+            <td>{{form.docente}}</td>
+            <td>{{form.semestre}}</td>
+            <td>{{form.dia}}</td>
+            <td>{{form.hora}}</td>
+            <td>{{form.salon}}</td>
+        </tr>
+    </table>
+{% endblock contenido %}

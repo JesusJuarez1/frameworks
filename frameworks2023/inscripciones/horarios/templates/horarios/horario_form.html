@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block titulo %}
+    {{accion}} Horario
+{% endblock titulo %}
+
+{% block contenido %}
+
+    {% block drop %}
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'lista_horarios' %}">Lista Horarios</a></li>
+            <li><a class="dropdown-item" href="{% url 'nuevo_horario' %}">Nuevo Horario</a></li>
+        </ul>
+    {% endblock drop %}
+    
+    <h1>{{accion}} Horario</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_table}}
+        <button class="btn btn-success" type="submit">
+            {% if accion == 'Nuevo' %}
+                Agregar
+            {% else %}
+                Guardar
+            {% endif %}
+        </button>
+    </form>
+{% endblock contenido %}
