@@ -44,8 +44,9 @@ def buscar_materia(request):
         semestre = request.POST.get('semestre',None)
         creditos = request.POST.get('creditos',None)
         programa = request.POST.get('programa',None)
+        programa2 = request.POST.get('program',None)
         optativa = request.POST.get('optativa',None)
-        programa = ProgramaAcademico.objects.get(clave=programa)
+        # programa = ProgramaAcademico.objects.get(clave=programa)
         
         if clave:
             materias = materias.filter(clave=clave)
@@ -59,10 +60,13 @@ def buscar_materia(request):
         if creditos:
             materias = materias.filter(creditos=creditos)
         if programa:
-            materias = materias.filter(programa=programa)
-        if optativa == 'on':
+            materias = materias.filter(programa__clave=programa)
+        if optativa == '1':
             materias = materias.filter(optativa=True)
-        
+        elif optativa == '2':
+            materias = materias.filter(optativa=False)
+        if programa2:
+            materias = materias.filter(programa__nombre__contains=programa2)
         ##print(materias.query) Muestra la sentencia sql con la que hace la consulta
     else:
         form = FiltrosMateria()

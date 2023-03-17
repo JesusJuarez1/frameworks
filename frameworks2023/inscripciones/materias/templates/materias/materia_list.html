@@ -23,12 +23,18 @@
                 <td>{{form.nombre}}</td>
                 <td>{{form.semestre}}</td>
                 <td>{{form.creditos}}</td>
+                <td>{{form.programa}}</td>
+                <td>{{form.programa2}}</td>
                 <td>
-                    {{form.programa}}
+                    <input type="text" name="programa2" value="">
                 </td>
                 <td>
                     <span>Optativa</span>
-                    {{form.optativa}}
+                    <select name="optativa" >
+                        <option value="">------</option>
+                        <option value="1">Sí</option>
+                        <option value="2">No</option>
+                    </select>
                 </td>
                 <td>
                     <input class="btn btn-success" type="submit" value="Buscar">
@@ -57,7 +63,7 @@
                     <td>{{materia.semestre}}</td>
                     <td>{{materia.creditos}}</td>
                     <td>
-                        {{materia.programa}}
+                        {{materia.programa.nombre}}
                     </td>
                     <td>
                         
