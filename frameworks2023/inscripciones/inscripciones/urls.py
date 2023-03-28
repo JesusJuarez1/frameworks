@@ -10,4 +10,5 @@ urlpatterns = [
     path('', Bienvenida.as_view(), name='bienvenida'),
     path('horarios/', include('horarios.urls_horarios')),
     path('usuarios/', include('usuarios.urls')),
+    path('docentes/', include('docentes.urls')),
 ]

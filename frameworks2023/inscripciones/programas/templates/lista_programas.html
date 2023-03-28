@@ -7,13 +7,6 @@
 
 {% block contenido %}
 
-    {% block drop %}
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'lista_programas' %}">Lista Programas</a></li>
-            <li><a class="dropdown-item" href="{% url 'nuevo_programa' %}">Nuevo Programa</a></li>
-        </ul>
-    {% endblock drop %}
-
     <h1>Lista de programas académicos</h1>
     <table class="table">
         <thead>

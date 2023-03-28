@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block titulo %}
+    {{accion}} Docente
+{% endblock titulo %}
+
+{% block contenido %}
+    
+    <h1>{{accion}} Docente</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-success" type="submit">
+            {% if accion == 'Nueva' %}
+                Agregar
+            {% else %}
+                Guardar
+            {% endif %}
+        </button>
+    </form>
+{% endblock contenido %}
+
+
+{% block scripts %}
+    <script src="{% static 'js/funciones.js' %}"></script>
+{% endblock scripts %}
+    
