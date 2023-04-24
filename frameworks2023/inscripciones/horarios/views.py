@@ -7,6 +7,7 @@ from .forms import FormHorario, FormEditarHorario
 from django import forms
 
 class ListaHorarios(ListView):
+    paginate_by = 5
     model = Horario
     
 class NuevoHorario(CreateView):

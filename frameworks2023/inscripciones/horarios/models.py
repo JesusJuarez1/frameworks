@@ -26,7 +26,7 @@ DIAS = [
 class Horario(models.Model):
     clave = models.BigAutoField('Clave', primary_key=True)
     materia = models.ForeignKey("materias.Materia", verbose_name='Materia', on_delete=models.DO_NOTHING)
-    docente = models.ForeignKey('docentes.Docente', verbose_name='Docente', on_delete=models.DO_NOTHING)
+    docente = models.ForeignKey('usuarios.Docente', verbose_name='Docente', on_delete=models.DO_NOTHING)
     semestre = models.CharField('Semestre' , max_length=2, choices=SEMESTRES)
     dia = models.CharField('Dia' , max_length=2, choices=DIAS)
     hora = models.CharField('Hora', max_length=200)

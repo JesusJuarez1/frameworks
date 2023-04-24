@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect
 from unidades_academicas.models import UnidadAcademica
 from unidades_academicas.forms import FormUnidadAcademica
+from django.core.paginator import Paginator
 
 def lista_unidades(request):
+    unidades = UnidadAcademica.objects.all().order_by('nombre')
+    paginator = Paginator(unidades,5)  # Show 5 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     context = {
-        'unidades' : UnidadAcademica.objects.all()
+        'object_list': page_obj,
+        'page_obj': page_obj,
+        'unidades' : unidades
     }
     return render(request, 'lista_unidades.html', context)
 
