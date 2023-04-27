@@ -1,92 +1,96 @@
 {% extends 'base.html' %}
 
-
 {% block titulo %}
-    Lista de Materias
+    Lista de materias
 {% endblock titulo %}
 
 {% block contenido %}
-
-    {% block drop %}
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'lista_materias' %}">Lista Materias</a></li>
-            <li><a class="dropdown-item" href="{% url 'nueva_materia' %}">Nueva Materia</a></li>
-        </ul>
-    {% endblock drop %}
+<h1>Lista de materias</h1>
+<form action="{% url 'buscar_materia' %}" method="post" id="form">
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td>{{form.clave}}</td>
+            <td>{{form.nombre}}</td>
+            <td>{{form.semestre}}</td>
+            <td>{{form.creditos}}</td>
+            <td>
+                <span>Optativa</span>
+                <select name="optativa">
+                    <option value="">-------</option>
+                    <option value="1">Sí</option>
+                    <option value="2">No</option>
+                </select>
+            </td>
+            <td>
+                {{form.programa}}
+            </td>
+            <td>
+                <input type="text" name="programa2" value="">
+            </td>
+            <td>
+                <input class="btn btn-success" type="submit" value="Buscar">
+                <input type="hidden" name="page" id="page">
+            </td>
+        </tr>
+    </table>
     
-    <h1>Lista de Materias</h1>
-    <form action="{% url 'buscar_materia' %}" method="post">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{form.clave}}</td>
-                <td>{{form.nombre}}</td>
-                <td>{{form.semestre}}</td>
-                <td>{{form.creditos}}</td>
-                <td>{{form.programa}}</td>
-                <td>{{form.programa2}}</td>
-                <td>
-                    <input type="text" name="programa2" value="">
-                </td>
-                <td>
-                    <span>Optativa</span>
-                    <select name="optativa" >
-                        <option value="">------</option>
-                        <option value="1">Sí</option>
-                        <option value="2">No</option>
-                    </select>
-                </td>
-                <td>
-                    <input class="btn btn-success" type="submit" value="Buscar">
-                </td>
-
-            </tr>
-        </table>
-    </form>
-    
-    <table width="100%">
-        <thead>
-            <tr>
-                <th>Clave</th>
-                <th>Nombre</th>
-                <th>Semestre</th>
-                <th>Creditos</th>
-                <th>Programa</th>
-                <th>Optativa</th>
-            </tr>
-        </thead>
+</form>
+<form action="{% url 'eliminar_todas' %}" method="post">
+    {% csrf_token %}
+<table class="table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" name="todos" id=""></th>
+            <th>Clave</th>
+            <th>Nombre</th>
+            <th>Semestre</th>
+            <th>Créditos</th>
+            <th>Optativa</th>
+            <th>Programa</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
         <tbody>
             {% for materia in object_list %}
                 <tr>
+                    <td>
+                        <input type="checkbox" name="{{materia.clave}}">
+                    </td>
                     <td>{{materia.clave}}</td>
                     <td>{{materia.nombre}}</td>
                     <td>{{materia.semestre}}</td>
                     <td>{{materia.creditos}}</td>
                     <td>
-                        {{materia.programa.nombre}}
-                    </td>
-                    <td>
-                        
                         {% if materia.optativa %}
                             Sí
                         {% else %}
                             No
                         {% endif %}
-                            
                     </td>
+                    <td>{{materia.programa.nombre}}</td>
                     <td>
-                        <a class="btn btn-sm btn-primary" href="{% url 'editar_materia' materia.clave %}">Editar</a>
-                        <a class="btn btn-sm btn-danger" href="{% url 'eliminar_materia' materia.clave %}">Eliminar</a>
+                        <a class="btn btn-sm btn-primary" 
+                            href="{% url 'editar_materia' materia.clave %}">
+                            Editar
+                        </a>
+                        <a class="btn btn-sm btn-danger" 
+                            href="{% url 'eliminar_materia' materia.clave %}">
+                            Eliminar
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
+       
         </tbody>
     </table>
+    <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
+    </form>
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <a href="javascript:enviar(1);">&laquo; first</a>
+                <a href="javascript:enviar({{ page_obj.previous_page_number }});">previous</a>
             {% endif %}
     
             <span class="current">
@@ -94,10 +98,18 @@
             </span>
     
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a href="javascript:enviar({{ page_obj.next_page_number }});">next</a>
+                <a href="javascript:enviar({{ page_obj.paginator.num_pages }});">last &raquo;</a>
             {% endif %}
         </span>
     </div>
-
 {% endblock contenido %}
+
+{% block scripts %}
+    <script>
+        function enviar(page){
+            $("#page").val(page);
+            $("#form").submit();
+        }
+    </script>
+{% endblock scripts %}

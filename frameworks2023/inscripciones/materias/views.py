@@ -6,6 +6,8 @@ from .models import Materia
 from .forms import FormMateria, FormEditarMateria, FiltrosMateria
 from programas.models import ProgramaAcademico
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.shortcuts import redirect
 
 
 class Bienvenida(TemplateView):
@@ -82,7 +84,7 @@ def buscar_materia(request):
         form = FiltrosMateria()
         
     paginator = Paginator(materias, 5)  # Show 5 contacts per page.
-    page_number = request.GET.get("page")
+    page_number = request.POST.get("page")
     page_obj = paginator.get_page(page_number)
     context = {
         'object_list': page_obj,
@@ -90,3 +92,16 @@ def buscar_materia(request):
         'form': form
     } 
     return render(request, 'materias/materia_list.html', context)
+
+
+def eliminar_todas(request):
+    if request.method == 'POST':
+        claves = []
+        for i in request.POST:
+            if i != "csrfmiddlewaretoken":
+                claves.append(i)
+        if claves:
+            Materia.objects.filter(clave__in=claves).delete()
+            messages.success(request, 'Materias eliminadas exitosamente.')
+    
+    return redirect('lista_materias')

@@ -23,6 +23,11 @@
 </head>
 
 <body>
+  
+  {% if mensaje %}
+    {{mensaje}}
+  {% endif %}
+    
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="content-wrapper d-flex align-items-center auth px-0">
@@ -34,7 +39,7 @@
               </div>
               <h4>Bienvenido al sistema de inscripciones</h4>
               <h6 class="fw-light">Inicia sesión para continuar</h6>
-              <form class="pt-3" method="post" >
+              <form class="pt-3" method="post" action="{% url 'login' %}">
                 {% csrf_token %}
 
                 <div class="form-group">
