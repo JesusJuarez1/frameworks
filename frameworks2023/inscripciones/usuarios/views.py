@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -12,13 +12,17 @@ from django.utils.encoding import force_bytes
 from .token import token_activacion
 from django.core.mail import EmailMessage
 from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import Docente
 from .forms import FormDocente, UserForm, FormPerfilDocente
 # def login(request):
 #     return render(request, 'login.html')
 
 
-class RegistrarDocente(SuccessMessageMixin, CreateView):
+
+class RegistrarDocente(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
+    permission_required = 'users.permiso_administrador'
     model = Docente
     template_name = 'registrar_docente.html'
     form_class = FormDocente
@@ -62,6 +66,7 @@ class LoginView(LoginView):
     form_class = AuthenticationForm
     
 
+@login_required
 def perfil(request):
     # print(request.user.docente)
     try:
@@ -87,8 +92,8 @@ def perfil(request):
         
     return render(request, 'perfil_docente.html', {'form':form})
 
+
 class ActivarCuenta(TemplateView):
-    
     def get(self, request, *args, **kwargs):
         # context = self.get_context_data(**kwargs)
 
@@ -109,3 +114,30 @@ class ActivarCuenta(TemplateView):
         return render(request, "{% url 'login' %}",{'mensaje':mensaje})
         
         # return self.render_to_response(context)
+        
+@permission_required('users.permiso_administrador')
+def lista_usuarios(request):
+    usuarios = User.objects.all()
+    grupos = Group.objects.all()
+    
+    context ={
+        'usuarios': usuarios,
+        'grupos': grupos
+    }
+    
+    return render(request, 'lista_usuarios.html', context)
+
+@permission_required('users.permiso_administrador')
+def asignar_grupo_usuarios(request):
+    if request.method == 'POST':
+        grupo_id = request.POST.get('grupo')
+        grupo = Group.objects.get(id=grupo_id)
+        ids = []
+        for i in request.POST:
+            if i != "csrfmiddlewaretoken" and i != "grupo":
+                ids.append(i)
+        if ids:
+            usuarios = User.objects.filter(id__in=ids)
+            for usuario in usuarios:
+                usuario.groups.add(grupo)
+    return redirect('lista_usuarios')

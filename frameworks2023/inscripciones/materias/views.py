@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import Materia
 from .forms import FormMateria, FormEditarMateria, FiltrosMateria
 from programas.models import ProgramaAcademico
@@ -10,16 +12,17 @@ from django.contrib import messages
 from django.shortcuts import redirect
 
 
-class Bienvenida(TemplateView):
+class Bienvenida(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
 
-class ListaMaterias(ListView):
+class ListaMaterias(LoginRequiredMixin, ListView):
     paginate_by = 5
     model = Materia
     extra_context = {'form': FiltrosMateria}
 
     
-class NuevaMateria(CreateView):
+class NuevaMateria(PermissionRequiredMixin ,CreateView):
+    permission_required = ['docentes.permiso_docente','users.permiso_administrador']
     model = Materia
     form_class = FormMateria
     # fields = '__all__'
@@ -29,16 +32,19 @@ class NuevaMateria(CreateView):
     # template_name = 'alta_materia.html'
     # fields = ['nombre','clave','semestre']
     
-class EditarMateria(UpdateView):
+class EditarMateria(PermissionRequiredMixin, UpdateView):
+    permission_required = ['docentes.permiso_docente','users.permiso_administrador']
     model = Materia
     form_class = FormEditarMateria
     extra_context = {'accion': 'Editar'}
     success_url = reverse_lazy('lista_materias')
     
-class EliminarMateria(DeleteView):
+class EliminarMateria(PermissionRequiredMixin, DeleteView):
+    permission_required = ['docentes.permiso_docente','users.permiso_administrador']
     model = Materia
     success_url = reverse_lazy('lista_materias')
     
+@login_required
 def buscar_materia(request):
     materias = Materia.objects.all().order_by('-nombre','semestre')
     
@@ -93,7 +99,7 @@ def buscar_materia(request):
     } 
     return render(request, 'materias/materia_list.html', context)
 
-
+@permission_required('docentes.permiso_docente','users.permiso_administrador')
 def eliminar_todas(request):
     if request.method == 'POST':
         claves = []

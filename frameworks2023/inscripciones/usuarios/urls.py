@@ -10,6 +10,8 @@ urlpatterns = [
     path('nuevo_docente/', views.RegistrarDocente.as_view(), name='nuevo_docente'),
     path('perfil', views.perfil, name='perfil_docente'),
     path('activar/<slug:uidb64>/<slug:token>', views.ActivarCuenta.as_view(), name='activar'),
+    path('lista', views.lista_usuarios, name='lista_usuarios'),
+    path('grupo_usuarios', views.asignar_grupo_usuarios, name='grupo_usuarios'),
     
     # path('nuevo-alumno/', views.RegistrarAlumno.as_view(), name='nuevo_alumno'),
 ]

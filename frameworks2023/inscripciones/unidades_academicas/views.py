@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required,permission_required
 from unidades_academicas.models import UnidadAcademica
 from unidades_academicas.forms import FormUnidadAcademica
 from django.core.paginator import Paginator
 
+@login_required
 def lista_unidades(request):
     unidades = UnidadAcademica.objects.all().order_by('nombre')
     paginator = Paginator(unidades,5)  # Show 5 contacts per page.
@@ -15,6 +17,8 @@ def lista_unidades(request):
     }
     return render(request, 'lista_unidades.html', context)
 
+
+@permission_required('users.permiso_administrador')
 def nueva_unidad(request):
     if request.method == 'POST':
         form = FormUnidadAcademica(request.POST) #Llena con lo que trae el post el formulario
@@ -30,10 +34,14 @@ def nueva_unidad(request):
     }
     return render(request, 'nueva_unidad.html', context)
 
+
+@permission_required('users.permiso_administrador')
 def eliminar_unidad(request, id):
     UnidadAcademica.objects.get(id=id).delete()
     return redirect('lista_unidades')
 
+
+@permission_required('users.permiso_administrador')
 def editar_unidad(request, id):
     unidad = UnidadAcademica.objects.get(id=id)
     
