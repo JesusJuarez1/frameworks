@@ -33,7 +33,7 @@ class _RegistrarMateria extends State<RegistrarMateria> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
+              const SizedBox(
                 child: Divider(color: Colors.blueGrey),
               ),
               TextField(
@@ -49,7 +49,7 @@ class _RegistrarMateria extends State<RegistrarMateria> {
                   print(_clave);
                 },
               ),
-              Divider(
+              const Divider(
                 height: 10.0,
               ),
               TextField(
@@ -65,7 +65,7 @@ class _RegistrarMateria extends State<RegistrarMateria> {
                   print(_nombre);
                 },
               ),
-              Divider(
+              const Divider(
                 height: 10.0,
               ),
               TextFormField(
@@ -79,34 +79,37 @@ class _RegistrarMateria extends State<RegistrarMateria> {
                     _creditos = valor as int;
                     print(_creditos);
                   }),
-              Divider(
+              const Divider(
                 height: 10.0,
               ),
               DropdownButton(
-                  items: <String>[
-                    '1er. Semestre',
-                    '2do. Semestre',
-                    '3er. Semestre',
-                    '4to. Semestre',
-                    '5to. Semestre',
-                    '6to. Semestre',
-                    '7mo. Semestre',
-                    '8vo. Semestre',
-                    '9no. Semestre'
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  value: _semestre,
-                  hint: const Text('Escoge un semestre'),
-                  onChanged: (valor) {
-                    setState(() {
-                      _semestre = valor!;
-                    });
-                  }),
-              Divider(
+                items: <String>[
+                  '1er. Semestre',
+                  '2do. Semestre',
+                  '3er. Semestre',
+                  '4to. Semestre',
+                  '5to. Semestre',
+                  '6to. Semestre',
+                  '7mo. Semestre',
+                  '8vo. Semestre',
+                  '9no. Semestre'
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                value: _semestre,
+                hint: const Text('Escoge un semestre'),
+                onChanged: (valor) {
+                  setState(() {
+                    _semestre = valor!;
+                  });
+                },
+                icon: const Icon(Icons.perm_contact_calendar),
+                isExpanded: true,
+              ),
+              const Divider(
                 height: 10.0,
               ),
               SwitchListTile(
@@ -117,9 +120,9 @@ class _RegistrarMateria extends State<RegistrarMateria> {
                     _optativa = valor;
                   });
                 },
-                subtitle: _optativa ? Text('Sí') : Text('No'),
+                subtitle: _optativa ? const Text('Sí') : const Text('No'),
               ),
-              Divider(
+              const Divider(
                 height: 10.0,
               ),
               TextFormField(
@@ -131,10 +134,24 @@ class _RegistrarMateria extends State<RegistrarMateria> {
                           borderRadius: BorderRadius.circular(10.0))),
                   onSaved: (valor) {
                     _programa = valor!;
-                    print(_creditos);
-                  })
+                    print(_programa);
+                  }),
+              const Divider(
+                height: 10.0,
+              ),
+              TextButton(
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      textStyle: const TextStyle(fontSize: 20)),
+                  onPressed: _registrarMateria,
+                  child: const Text('guardar',
+                      style: const TextStyle(color: Colors.white)))
             ]),
       ]),
     );
+  }
+
+  void _registrarMateria() {
+    print('$_clave $_nombre');
   }
 }

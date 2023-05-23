@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hola_mundo/screens/login_screen.dart';
 import 'package:hola_mundo/screens/registrar_materia_screen.dart';
 
 void main() {
@@ -82,6 +83,16 @@ class _ContadorScreen extends State<ContadorScreen> {
             },
             tooltip: 'Registrar Materia',
             child: const Icon(Icons.account_balance_wallet_outlined),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+              );
+            },
+            tooltip: 'Login',
+            child: const Icon(Icons.login),
           )
         ],
       ),
