@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'horarios',
     'salones',
     'usuarios',
+    'api',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
